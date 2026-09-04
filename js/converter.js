@@ -461,7 +461,7 @@ function createModernSingboxConfig(outbounds, validTags) {
                 { "domain": ["raw.githubusercontent.com"], "server": "dns-direct" },
                 { "clash_mode": "Direct", "server": "dns-direct" },
                 { "clash_mode": "Global", "server": "dns-remote" },
-                { "type": "logical", "mode": "and", "rules": [{ "rule_set": "geosite-ir" }, { "rule_set": "geoip-ir" }], "action": "route", "server": "dns-direct" },
+                { "rule_set": "geosite-ir", "server": "dns-direct" },
                 { "rule_set": ["geosite-malware", "geosite-phishing", "geosite-cryptominers", "geosite-category-ads-all"], "action": "reject" },
                 { "disable_cache": true, "inbound": "tun-in", "query_type": ["A", "AAAA"], "server": "dns-fake" }
             ],
@@ -473,7 +473,7 @@ function createModernSingboxConfig(outbounds, validTags) {
         ],
         "outbounds": [
             { "type": "selector", "tag": "🌐 Anonymous Multi", "outbounds": ["👽 Best Ping 🚀", ...validTags, "direct"] },
-            { "type": "direct", "tag": "direct" },
+            { "type": "direct", "tag": "direct", "tcp_fast_open": true },
             { "type": "urltest", "tag": "👽 Best Ping 🚀", "outbounds": validTags, "url": "https://www.gstatic.com/generate_204", "interrupt_exist_connections": false, "interval": "30s" },
             ...outbounds
         ],
@@ -491,14 +491,14 @@ function createModernSingboxConfig(outbounds, validTags) {
                 { "rule_set": ["geoip-ir"], "outbound": "direct" }
             ],
             "rule_set": [
-                { "type": "remote", "tag": "geosite-malware", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-malware.srs", "http_client": {"detour": "direct"} },
-                { "type": "remote", "tag": "geoip-malware", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-malware.srs", "http_client": {"detour": "direct"} },
-                { "type": "remote", "tag": "geosite-phishing", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-phishing.srs", "http_client": {"detour": "direct"} },
-                { "type": "remote", "tag": "geoip-phishing", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-phishing.srs", "http_client": {"detour": "direct"} },
-                { "type": "remote", "tag": "geosite-cryptominers", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-cryptominers.srs", "http_client": {"detour": "direct"} },
-                { "type": "remote", "tag": "geosite-category-ads-all", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-category-ads-all.srs", "http_client": {"detour": "direct"} },
-                { "type": "remote", "tag": "geosite-ir", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-ir.srs", "http_client": {"detour": "direct"} },
-                { "type": "remote", "tag": "geoip-ir", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ir.srs", "http_client": {"detour": "direct"} }
+                { "type": "remote", "tag": "geosite-malware", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-malware.srs", "http_client": {"detour": "direct"}  },
+                { "type": "remote", "tag": "geoip-malware", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-malware.srs", "http_client": {"detour": "direct"}  },
+                { "type": "remote", "tag": "geosite-phishing", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-phishing.srs", "http_client": {"detour": "direct"}  },
+                { "type": "remote", "tag": "geoip-phishing", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-phishing.srs", "http_client": {"detour": "direct"}  },
+                { "type": "remote", "tag": "geosite-cryptominers", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-cryptominers.srs", "http_client": {"detour": "direct"}  },
+                { "type": "remote", "tag": "geosite-category-ads-all", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-category-ads-all.srs", "http_client": {"detour": "direct"}  },
+                { "type": "remote", "tag": "geosite-ir", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-ir.srs", "http_client": {"detour": "direct"}  },
+                { "type": "remote", "tag": "geoip-ir", "format": "binary", "url": "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ir.srs", "http_client": {"detour": "direct"}  }
             ],
             "auto_detect_interface": true,
             "default_domain_resolver": { "server": "dns-direct", "strategy": "prefer_ipv4", "rewrite_ttl": 60 },
